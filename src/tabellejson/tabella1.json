@@ -1,0 +1,31 @@
+{
+  "_id": "MongoDB internal id",
+  "className": "Used by Morphia to map with entities",
+  "id": "The id field from the dump by DBpedia",
+  "cells": [
+    {
+      "className": "Used by Morphia to map with entities",
+      "innerHTML": "HTML code of the cell",
+      "isHeader": "true if this cell is a header",
+      "type": "Old unused field",
+      "Coordinates": "Object containing the coordinates of the cell, starting from 0",
+      "cleanedText": "Fabio è un ragazzo di Roma di 22 anni"
+    },
+    {
+      "className": "Used by Morphia to map with entities",
+      "innerHTML": "HTML code of the cell",
+      "isHeader": "true if this cell is a header",
+      "type": "Old unused field",
+      "Coordinates": "Object containing the coordinates of the cell, starting from 0",
+      "cleanedText": "Addi è un ragazzo di Salerno di 23 anni"
+    },
+    {
+      "className": "Used by Morphia to map with entities",
+      "innerHTML": "HTML code of the cell",
+      "isHeader": "true if this cell is a header",
+      "type": "Old unused field",
+      "Coordinates": "Object containing the coordinates of the cell, starting from 0",
+      "cleanedText": "Sandro è un ragazzo di Sava di 22 anni"
+    }
+  ]
+}

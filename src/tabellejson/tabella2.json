@@ -1,0 +1,31 @@
+{
+  "_id": "id2",
+  "className": "Used by Morphia to map with entities",
+  "id": "The id field from the dump by DBpedia",
+  "cells": [
+    {
+      "className": "Used by Morphia to map with entities",
+      "innerHTML": "HTML code of the cell",
+      "isHeader": "true if this cell is a header",
+      "type": "Old unused field",
+      "Coordinates": "Object containing the coordinates of the cell, starting from 0",
+      "cleanedText": "Roma è la città più antica"
+    },
+    {
+      "className": "Used by Morphia to map with entities",
+      "innerHTML": "HTML code of the cell",
+      "isHeader": "true if this cell is a header",
+      "type": "Old unused field",
+      "Coordinates": "Object containing the coordinates of the cell, starting from 0",
+      "cleanedText": "New York è una delle città più moderne"
+    },
+    {
+      "className": "Used by Morphia to map with entities",
+      "innerHTML": "HTML code of the cell",
+      "isHeader": "true if this cell is a header",
+      "type": "Old unused field",
+      "Coordinates": "Object containing the coordinates of the cell, starting from 0",
+      "cleanedText": "Napoli è una delle città dove si mangia meglio"
+    }
+  ]
+}
