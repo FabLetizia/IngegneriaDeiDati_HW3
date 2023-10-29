@@ -1,8 +1,3 @@
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.CharArraySet;
-import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
-import org.apache.lucene.analysis.it.ItalianAnalyzer;
-import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
@@ -14,35 +9,77 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
-public class Indexer {
-    private String indexPath = "/Users/alessandropesare/software/GitHub/IngegneriaDeiDati_HW3/target";
-    private String docsPath = "/Users/alessandropesare/software/GitHub/IngegneriaDeiDati_HW3/src/resources";
-    private DataProcessor dataProcessor;
+    public class Indexer {
+        private String indexPath;
+        private String docsPath;
 
-    public Indexer(DataProcessor dataProcessor) {
-        this.dataProcessor = dataProcessor;
-    }
+        private Directory directory;
+        private DataProcessor dataProcessor;
 
-    public void indexDocuments(IndexWriter writer, Path dir) throws IOException {
-        if (Files.isDirectory(dir)) {
-            File[] files = dir.toFile().listFiles((pathname) -> pathname.getName().endsWith(".html"));
-            if (files != null) {
-                for (File file : files) {
-                    System.out.println(file.getName());
-                    Document luceneDoc = dataProcessor.processHTMLTable(readTextFile(file));
-                    writer.addDocument(luceneDoc);
-                }
-                writer.commit();
+        public Indexer(DataProcessor dataProcessor) {
+            this.dataProcessor = dataProcessor;
+            //this.indexPath = "/Users/alessandropesare/software/GitHub/IngegneriaDeiDati_HW3/target";
+            this.indexPath = "/target";
+            //this.docsPath = "/Users/alessandropesare/software/GitHub/IngegneriaDeiDati_HW3/src/resources";
+            this.docsPath = "src/resources";
+            initialize();
+        }
+
+        public Indexer(DataProcessor dataProcessor, String indexPath, String docsPath) {
+            this.dataProcessor = dataProcessor;
+            this.indexPath = indexPath;
+            this.docsPath = docsPath;
+            initialize();
+        }
+
+        private void initialize() {
+            try {
+                this.directory = FSDirectory.open(Paths.get(this.getIndexPath()));
+                IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer());
+                IndexWriter writer = new IndexWriter(directory, config);
+                System.out.println("Inizio lettura dati e costruzione indice");
+                long startTime = System.currentTimeMillis();
+                indexDocuments(writer, Paths.get(this.getDocsPath()));
+                writer.close();
+                long endTime = System.currentTimeMillis();
+                long time = endTime - startTime;
+                System.out.println("Indicizzazione completata con successo. L'indice è stato salvato in " + this.getIndexPath());
+                System.out.println("Il tempo trascorso per l'indicizzazione dei file è: " + time + " millisecondi");
+            } catch (IOException e) {
+                System.out.println("Qualcosa è andato storto!");
+                throw new RuntimeException(e);
             }
         }
-    }
 
-    private Analyzer createAnalyzer() {
-        CharArraySet contenutoStopWords = new CharArraySet(Arrays.asList("in","dei","di","il","la","lo","gli","dell'"), true);
+        public String getIndexPath() {
+            return this.indexPath;
+        }
+
+        public String getDocsPath() {
+            return this.docsPath;
+        }
+        public Directory getDirectory() {
+            return this.directory;
+        }
+
+
+        public void indexDocuments(IndexWriter writer, Path dir) throws IOException {
+            if (Files.isDirectory(dir)) {
+                File[] files = dir.toFile().listFiles((pathname) -> pathname.getName().endsWith(".json"));
+                if (files != null) {
+                    for (File file : files) {
+                        System.out.println(file.getName());
+                        Document luceneDoc = dataProcessor.processJSONData(readTextFile(file));
+                        writer.addDocument(luceneDoc);
+                        System.out.println(luceneDoc.toString());
+                    }
+                    writer.commit();
+                }
+            }
+        }
+    /*private Analyzer createAnalyzer() {
+        CharArraySet contenutoStopWords = new CharArraySet(Arrays.asList("in", "dei", "di", "il", "la", "lo", "gli", "dell'"), true);
         Analyzer titoloAnalyzer = new WhitespaceAnalyzer();
         Analyzer contenutoAnalyzer = new StandardAnalyzer(contenutoStopWords);
         Analyzer defaultAnalyzer = new ItalianAnalyzer();
@@ -52,7 +89,7 @@ public class Indexer {
         perFieldAnalyzers.put("contenuto", contenutoAnalyzer);
 
         return new PerFieldAnalyzerWrapper(defaultAnalyzer, perFieldAnalyzers);
-    }
+    }*/
 
     private String readTextFile(File file) throws IOException {
         /* Leggiamo il contenuto del file .txt e lo restituiamo come una stringa, utilizzo File Reader
@@ -68,25 +105,5 @@ public class Indexer {
             System.out.println(text.toString());
             return text.toString();
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-        DataProcessor dataProcessor = new HTMLDataProcessor();
-        Indexer indexer = new Indexer(dataProcessor);
-
-        Directory directory = FSDirectory.open(Paths.get(indexer.indexPath));
-        Analyzer analyzer = indexer.createAnalyzer();
-        IndexWriterConfig config = new IndexWriterConfig(analyzer);
-        IndexWriter writer = new IndexWriter(directory, config);
-
-        System.out.println("Inizio lettura dati");
-        long startTime = System.currentTimeMillis();
-        indexer.indexDocuments(writer, Paths.get(indexer.docsPath));
-        writer.close();
-        long endTime = System.currentTimeMillis();
-        long time = endTime - startTime;
-
-        System.out.println("Indicizzazione completata con successo. L'indice è stato salvato in " + indexer.indexPath);
-        System.out.println("Il tempo trascorso per l'indicizzazione dei file è: " + time + " millisecondi");
     }
 }

@@ -9,13 +9,13 @@
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
-        <!-- Altre dipendenze -->
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.14.2</version> <!-- Assicurati di utilizzare la versione più recente di Jsoup -->
+            <version>1.14.2</version>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>

@@ -23,5 +23,14 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.14.2" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/gson-2.8.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
