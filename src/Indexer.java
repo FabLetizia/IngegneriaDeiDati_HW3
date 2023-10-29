@@ -19,10 +19,10 @@ import java.nio.file.Paths;
 
         public Indexer(DataProcessor dataProcessor) {
             this.dataProcessor = dataProcessor;
-            //this.indexPath = "/Users/alessandropesare/software/GitHub/IngegneriaDeiDati_HW3/target";
-            this.indexPath = "/target";
-            //this.docsPath = "/Users/alessandropesare/software/GitHub/IngegneriaDeiDati_HW3/src/resources";
-            this.docsPath = "src/resources";
+            this.indexPath = "/Users/alessandropesare/software/GitHub/IngegneriaDeiDati_HW3/target";
+            //this.indexPath = "/target";
+            this.docsPath = "/Users/alessandropesare/software/GitHub/IngegneriaDeiDati_HW3/src/tabellejson";
+            //this.docsPath = "src/resources";
             initialize();
         }
 
@@ -70,7 +70,8 @@ import java.nio.file.Paths;
                 if (files != null) {
                     for (File file : files) {
                         System.out.println(file.getName());
-                        Document luceneDoc = dataProcessor.processJSONData(readTextFile(file));
+                        System.out.println(file);
+                        Document luceneDoc = dataProcessor.processJSONData(file);
                         writer.addDocument(luceneDoc);
                         System.out.println(luceneDoc.toString());
                     }

@@ -5,6 +5,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.File;
+
 public class HTMLDataProcessor implements DataProcessor {
     @Override
     public Document processHTMLTable(String htmlDocument) {
@@ -32,7 +34,7 @@ public class HTMLDataProcessor implements DataProcessor {
     }
 
     @Override
-    public Document processJSONData(String jsonData) {
+    public Document processJSONData(File jsonData) {
         return null;
     }
 }
