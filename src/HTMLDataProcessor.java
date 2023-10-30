@@ -6,6 +6,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.File;
+import java.util.List;
 
 public class HTMLDataProcessor implements DataProcessor {
     @Override
@@ -34,7 +35,7 @@ public class HTMLDataProcessor implements DataProcessor {
     }
 
     @Override
-    public Document processJSONData(File jsonData) {
+    public List<Document> processJSONData(File jsonData) {
         return null;
     }
 }
