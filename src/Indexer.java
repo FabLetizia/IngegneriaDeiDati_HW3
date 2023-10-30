@@ -9,7 +9,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
 public class Indexer {
     private String indexPath;
@@ -20,7 +19,7 @@ public class Indexer {
 
     public Indexer(DataProcessor dataProcessor) {
         this.dataProcessor = dataProcessor;
-        this.indexPath = "/Users/alessandropesare/software/GitHub/IngegneriaDeiDati_HW3/target/index";
+        this.indexPath = "/Users/alessandropesare/software/GitHub/IngegneriaDeiDati_HW3/target";
         //this.indexPath = "/target";
         this.docsPath = "/Users/alessandropesare/software/GitHub/IngegneriaDeiDati_HW3/src/tabellejson";
         //this.docsPath = "src/resources";
@@ -72,11 +71,9 @@ public class Indexer {
                 for (File file : files) {
                     System.out.println(file.getName());
                     System.out.println(file);
-                    List<Document> luceneDocs = dataProcessor.processJSONData(file);
-                    for(Document document :luceneDocs) {
-                        writer.addDocument(document);
-                        System.out.println(document.toString());
-                    }
+                    Document luceneDoc = dataProcessor.processJSONData(file);
+                    writer.addDocument(luceneDoc);
+                    System.out.println(luceneDoc.toString());
                 }
                 writer.commit();
             }

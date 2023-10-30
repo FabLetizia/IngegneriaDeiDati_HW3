@@ -1,31 +1,1235 @@
 {
-  "_id": "MongoDB internal id",
-  "className": "Used by Morphia to map with entities",
-  "id": "The id field from the dump by DBpedia",
+  "_id": {
+    "$oid": "5a708a6ec868a712fd72a664"
+  },
+  "className": "it.uniroma3.WikiTEF.model.Table.Table",
+  "id": "http://dbpedia.org/resource/Afroasiatic_languages?dbpv=2016-10&nif=table&ref=7_2",
   "cells": [
     {
-      "className": "Used by Morphia to map with entities",
-      "innerHTML": "HTML code of the cell",
-      "isHeader": "true if this cell is a header",
-      "type": "Old unused field",
-      "Coordinates": "Object containing the coordinates of the cell, starting from 0",
-      "cleanedText": "Fabio è un ragazzo di Roma di 22 anni"
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellHeader",
+      "innerHTML": "↓ <a href=\"/mediawiki/index.php?title=Number_(grammar)\" class=\"mw-redirect\" title=\"Number (grammar)\">Number</a>",
+      "isHeader": true,
+      "type": "HEADER",
+      "Coordinates": {
+        "row": 0,
+        "column": 0
+      },
+      "cleanedText": "↓ Number",
+      "Rows": [
+        {
+          "LinkBlue": true,
+          "Title": "Number",
+          "Href": "Number_(grammar)"
+        }
+      ]
     },
     {
-      "className": "Used by Morphia to map with entities",
-      "innerHTML": "HTML code of the cell",
-      "isHeader": "true if this cell is a header",
-      "type": "Old unused field",
-      "Coordinates": "Object containing the coordinates of the cell, starting from 0",
-      "cleanedText": "Addi è un ragazzo di Salerno di 23 anni"
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellHeader",
+      "innerHTML": "<a href=\"/mediawiki/index.php?title=Arabic\" title=\"Arabic\">Arabic</a>",
+      "isHeader": true,
+      "type": "HEADER",
+      "Coordinates": {
+        "row": 0,
+        "column": 1
+      },
+      "cleanedText": "Arabic",
+      "Rows": [
+        {
+          "LinkBlue": true,
+          "Title": "Arabic",
+          "Href": "Arabic"
+        }
+      ]
     },
     {
-      "className": "Used by Morphia to map with entities",
-      "innerHTML": "HTML code of the cell",
-      "isHeader": "true if this cell is a header",
-      "type": "Old unused field",
-      "Coordinates": "Object containing the coordinates of the cell, starting from 0",
-      "cleanedText": "Sandro è un ragazzo di Sava di 22 anni"
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellHeader",
+      "innerHTML": "<a href=\"/mediawiki/index.php?title=Coptic_language\" title=\"Coptic language\">Coptic</a>",
+      "isHeader": true,
+      "type": "HEADER",
+      "Coordinates": {
+        "row": 0,
+        "column": 2
+      },
+      "cleanedText": "Coptic",
+      "Rows": [
+        {
+          "LinkBlue": true,
+          "Title": "Coptic",
+          "Href": "Coptic_language"
+        }
+      ]
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellHeader",
+      "innerHTML": "<a href=\"/mediawiki/index.php?title=Kabyle_language\" title=\"Kabyle language\">Kabyle</a>",
+      "isHeader": true,
+      "type": "HEADER",
+      "Coordinates": {
+        "row": 0,
+        "column": 3
+      },
+      "cleanedText": "Kabyle",
+      "Rows": [
+        {
+          "LinkBlue": true,
+          "Title": "Kabyle",
+          "Href": "Kabyle_language"
+        }
+      ]
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellHeader",
+      "innerHTML": "<a href=\"/mediawiki/index.php?title=Somali_language\" title=\"Somali language\">Somali</a>",
+      "isHeader": true,
+      "type": "HEADER",
+      "Coordinates": {
+        "row": 0,
+        "column": 4
+      },
+      "cleanedText": "Somali",
+      "Rows": [
+        {
+          "LinkBlue": true,
+          "Title": "Somali",
+          "Href": "Somali_language"
+        }
+      ]
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellHeader",
+      "innerHTML": "<a href=\"/mediawiki/index.php?title=Beja_language\" title=\"Beja language\">Beja</a>",
+      "isHeader": true,
+      "type": "HEADER",
+      "Coordinates": {
+        "row": 0,
+        "column": 5
+      },
+      "cleanedText": "Beja",
+      "Rows": [
+        {
+          "LinkBlue": true,
+          "Title": "Beja",
+          "Href": "Beja_language"
+        }
+      ]
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellHeader",
+      "innerHTML": "<a href=\"/mediawiki/index.php?title=Hausa_language\" title=\"Hausa language\">Hausa</a>",
+      "isHeader": true,
+      "type": "HEADER",
+      "Coordinates": {
+        "row": 0,
+        "column": 6
+      },
+      "cleanedText": "Hausa",
+      "Rows": [
+        {
+          "LinkBlue": true,
+          "Title": "Hausa",
+          "Href": "Hausa_language"
+        }
+      ]
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellHeader",
+      "innerHTML": "↓ <a href=\"/mediawiki/index.php?title=Number_(grammar)\" class=\"mw-redirect\" title=\"Number (grammar)\">Number</a>",
+      "isHeader": true,
+      "type": "HEADER",
+      "Coordinates": {
+        "row": 1,
+        "column": 0
+      },
+      "cleanedText": "↓ Number",
+      "Rows": [
+        {
+          "LinkBlue": true,
+          "Title": "Number",
+          "Href": "Number_(grammar)"
+        }
+      ]
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "katab",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 1,
+        "column": 1
+      },
+      "cleanedText": "katab"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "mou",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 1,
+        "column": 2
+      },
+      "cleanedText": "mou"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "afeg",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 1,
+        "column": 3
+      },
+      "cleanedText": "afeg"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "",
+      "isHeader": false,
+      "type": "EMPTY",
+      "Coordinates": {
+        "row": 1,
+        "column": 4
+      },
+      "cleanedText": ""
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "",
+      "isHeader": false,
+      "type": "EMPTY",
+      "Coordinates": {
+        "row": 1,
+        "column": 5
+      },
+      "cleanedText": ""
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "",
+      "isHeader": false,
+      "type": "EMPTY",
+      "Coordinates": {
+        "row": 1,
+        "column": 6
+      },
+      "cleanedText": ""
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellHeader",
+      "innerHTML": "↓ <a href=\"/mediawiki/index.php?title=Number_(grammar)\" class=\"mw-redirect\" title=\"Number (grammar)\">Number</a>",
+      "isHeader": true,
+      "type": "HEADER",
+      "Coordinates": {
+        "row": 2,
+        "column": 0
+      },
+      "cleanedText": "↓ Number",
+      "Rows": [
+        {
+          "LinkBlue": true,
+          "Title": "Number",
+          "Href": "Number_(grammar)"
+        }
+      ]
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "write",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 2,
+        "column": 1
+      },
+      "cleanedText": "write"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "die",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 2,
+        "column": 2
+      },
+      "cleanedText": "die"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "fly",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 2,
+        "column": 3
+      },
+      "cleanedText": "fly"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "come",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 2,
+        "column": 4
+      },
+      "cleanedText": "come"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "eat",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 2,
+        "column": 5
+      },
+      "cleanedText": "eat"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "drink",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 2,
+        "column": 6
+      },
+      "cleanedText": "drink"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "singular",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 3,
+        "column": 0
+      },
+      "cleanedText": "singular"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>ʼaktubu</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 3,
+        "column": 1
+      },
+      "cleanedText": "ʼaktubu"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>timou</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 3,
+        "column": 2
+      },
+      "cleanedText": "timou"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>ttafgeɣ</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 3,
+        "column": 3
+      },
+      "cleanedText": "ttafgeɣ"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>imaadaa</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 3,
+        "column": 4
+      },
+      "cleanedText": "imaadaa"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>tamáni</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 3,
+        "column": 5
+      },
+      "cleanedText": "tamáni"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>ina shan</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 3,
+        "column": 6
+      },
+      "cleanedText": "ina shan"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "singular",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 4,
+        "column": 0
+      },
+      "cleanedText": "singular"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>taktubīna</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 4,
+        "column": 1
+      },
+      "cleanedText": "taktubīna"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>temou</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 4,
+        "column": 2
+      },
+      "cleanedText": "temou"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>tettafgeḍ</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 4,
+        "column": 3
+      },
+      "cleanedText": "tettafgeḍ"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>timaadaa</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 4,
+        "column": 4
+      },
+      "cleanedText": "timaadaa"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>tamtínii</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 4,
+        "column": 5
+      },
+      "cleanedText": "tamtínii"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>kina shan</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 4,
+        "column": 6
+      },
+      "cleanedText": "kina shan"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "singular",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 5,
+        "column": 0
+      },
+      "cleanedText": "singular"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>taktubu</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 5,
+        "column": 1
+      },
+      "cleanedText": "taktubu"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>kmou</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 5,
+        "column": 2
+      },
+      "cleanedText": "kmou"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>tettafgeḍ</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 5,
+        "column": 3
+      },
+      "cleanedText": "tettafgeḍ"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>timaadaa</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 5,
+        "column": 4
+      },
+      "cleanedText": "timaadaa"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>tamtíniya</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 5,
+        "column": 5
+      },
+      "cleanedText": "tamtíniya"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>kana shan</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 5,
+        "column": 6
+      },
+      "cleanedText": "kana shan"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "singular",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 6,
+        "column": 0
+      },
+      "cleanedText": "singular"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>taktubu</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 6,
+        "column": 1
+      },
+      "cleanedText": "taktubu"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>smou</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 6,
+        "column": 2
+      },
+      "cleanedText": "smou"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>tettafeg</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 6,
+        "column": 3
+      },
+      "cleanedText": "tettafeg"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>timaadaa</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 6,
+        "column": 4
+      },
+      "cleanedText": "timaadaa"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>tamtíni</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 6,
+        "column": 5
+      },
+      "cleanedText": "tamtíni"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>tana shan</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 6,
+        "column": 6
+      },
+      "cleanedText": "tana shan"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "singular",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 7,
+        "column": 0
+      },
+      "cleanedText": "singular"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>yaktubu</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 7,
+        "column": 1
+      },
+      "cleanedText": "yaktubu"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>fmou</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 7,
+        "column": 2
+      },
+      "cleanedText": "fmou"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>yettafeg</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 7,
+        "column": 3
+      },
+      "cleanedText": "yettafeg"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>yimaadaa</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 7,
+        "column": 4
+      },
+      "cleanedText": "yimaadaa"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>tamíni</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 7,
+        "column": 5
+      },
+      "cleanedText": "tamíni"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>yana shan</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 7,
+        "column": 6
+      },
+      "cleanedText": "yana shan"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "dual",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 8,
+        "column": 0
+      },
+      "cleanedText": "dual"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>taktubāni</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 8,
+        "column": 1
+      },
+      "cleanedText": "taktubāni"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "",
+      "isHeader": false,
+      "type": "EMPTY",
+      "Coordinates": {
+        "row": 8,
+        "column": 2
+      },
+      "cleanedText": ""
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "",
+      "isHeader": false,
+      "type": "EMPTY",
+      "Coordinates": {
+        "row": 8,
+        "column": 3
+      },
+      "cleanedText": ""
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "",
+      "isHeader": false,
+      "type": "EMPTY",
+      "Coordinates": {
+        "row": 8,
+        "column": 4
+      },
+      "cleanedText": ""
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "",
+      "isHeader": false,
+      "type": "EMPTY",
+      "Coordinates": {
+        "row": 8,
+        "column": 5
+      },
+      "cleanedText": ""
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "",
+      "isHeader": false,
+      "type": "EMPTY",
+      "Coordinates": {
+        "row": 8,
+        "column": 6
+      },
+      "cleanedText": ""
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "dual",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 9,
+        "column": 0
+      },
+      "cleanedText": "dual"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>taktubāni</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 9,
+        "column": 1
+      },
+      "cleanedText": "taktubāni"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "",
+      "isHeader": false,
+      "type": "EMPTY",
+      "Coordinates": {
+        "row": 9,
+        "column": 6
+      },
+      "cleanedText": ""
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "dual",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 10,
+        "column": 0
+      },
+      "cleanedText": "dual"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>yaktubāni</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 10,
+        "column": 1
+      },
+      "cleanedText": "yaktubāni"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "",
+      "isHeader": false,
+      "type": "EMPTY",
+      "Coordinates": {
+        "row": 10,
+        "column": 6
+      },
+      "cleanedText": ""
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "plural",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 11,
+        "column": 0
+      },
+      "cleanedText": "plural"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>naktubu</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 11,
+        "column": 1
+      },
+      "cleanedText": "naktubu"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>tənmou</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 11,
+        "column": 2
+      },
+      "cleanedText": "tənmou"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>nettafeg</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 11,
+        "column": 3
+      },
+      "cleanedText": "nettafeg"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>nimaadnaa</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 11,
+        "column": 4
+      },
+      "cleanedText": "nimaadnaa"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>támnay</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 11,
+        "column": 5
+      },
+      "cleanedText": "támnay"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>muna shan</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 11,
+        "column": 6
+      },
+      "cleanedText": "muna shan"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "plural",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 12,
+        "column": 0
+      },
+      "cleanedText": "plural"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>taktubūna</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 12,
+        "column": 1
+      },
+      "cleanedText": "taktubūna"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>tetənmou</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 12,
+        "column": 2
+      },
+      "cleanedText": "tetənmou"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>tettafgem</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 12,
+        "column": 3
+      },
+      "cleanedText": "tettafgem"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>timaadaan</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 12,
+        "column": 4
+      },
+      "cleanedText": "timaadaan"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>támteena</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 12,
+        "column": 5
+      },
+      "cleanedText": "támteena"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>kuna shan</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 12,
+        "column": 6
+      },
+      "cleanedText": "kuna shan"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "plural",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 13,
+        "column": 0
+      },
+      "cleanedText": "plural"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>taktubna</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 13,
+        "column": 1
+      },
+      "cleanedText": "taktubna"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>tetənmou</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 13,
+        "column": 2
+      },
+      "cleanedText": "tetənmou"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>tettafgemt</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 13,
+        "column": 3
+      },
+      "cleanedText": "tettafgemt"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>timaadaan</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 13,
+        "column": 4
+      },
+      "cleanedText": "timaadaan"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>támteena</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 13,
+        "column": 5
+      },
+      "cleanedText": "támteena"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>kuna shan</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 13,
+        "column": 6
+      },
+      "cleanedText": "kuna shan"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "plural",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 14,
+        "column": 0
+      },
+      "cleanedText": "plural"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>yaktubūna</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 14,
+        "column": 1
+      },
+      "cleanedText": "yaktubūna"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>semou</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 14,
+        "column": 2
+      },
+      "cleanedText": "semou"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>ttafgen</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 14,
+        "column": 3
+      },
+      "cleanedText": "ttafgen"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>yimaadaan</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 14,
+        "column": 4
+      },
+      "cleanedText": "yimaadaan"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>támeen</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 14,
+        "column": 5
+      },
+      "cleanedText": "támeen"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>suna shan</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 14,
+        "column": 6
+      },
+      "cleanedText": "suna shan"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "plural",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 15,
+        "column": 0
+      },
+      "cleanedText": "plural"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>yaktubna</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 15,
+        "column": 1
+      },
+      "cleanedText": "yaktubna"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>semou</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 15,
+        "column": 2
+      },
+      "cleanedText": "semou"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>ttafgent</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 15,
+        "column": 3
+      },
+      "cleanedText": "ttafgent"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>yimaadaan</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 15,
+        "column": 4
+      },
+      "cleanedText": "yimaadaan"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>támeen</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 15,
+        "column": 5
+      },
+      "cleanedText": "támeen"
+    },
+    {
+      "className": "it.uniroma3.WikiTEF.model.Table.TableCellData",
+      "innerHTML": "<i>suna shan</i>",
+      "isHeader": false,
+      "type": "TEXT",
+      "Coordinates": {
+        "row": 15,
+        "column": 6
+      },
+      "cleanedText": "suna shan"
     }
-  ]
+  ],
+  "beginIndex": "14440",
+  "endIndex": "14440",
+  "referenceContext": "Afroasiatic_languages",
+  "type": "http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#OffsetBasedString",
+  "classe": "wikitable",
+  "maxDimensions": {
+    "row": 15,
+    "column": 6
+  },
+  "headersCleaned": [
+    "Arabic",
+    "Beja",
+    "Coptic",
+    "Hausa",
+    "Kabyle",
+    "Somali",
+    "↓ number"
+  ],
+  "keyColumn": 1
 }
