@@ -1,4 +1,5 @@
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.codecs.simpletext.SimpleTextCodec;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
@@ -37,6 +38,7 @@ public class Indexer {
         try {
             this.directory = FSDirectory.open(Paths.get(this.getIndexPath()));
             IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer());
+            config.setCodec(new SimpleTextCodec());
             IndexWriter writer = new IndexWriter(directory, config);
             System.out.println("Inizio lettura dati e costruzione indice");
             long startTime = System.currentTimeMillis();
