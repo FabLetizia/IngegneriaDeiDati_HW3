@@ -1,13 +1,16 @@
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.TextField;
+import org.apache.lucene.index.IndexWriter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.File;
+import java.nio.file.Path;
 
 public class HTMLDataProcessor implements DataProcessor {
+
+
     @Override
     public Document processHTMLTable(String htmlDocument) {
         // Analizza il documento HTML con Jsoup
@@ -34,7 +37,7 @@ public class HTMLDataProcessor implements DataProcessor {
     }
 
     @Override
-    public Document processJSONData(File jsonFile) {
-        return null;
+    public void processJSONData(Path jsonFile, IndexWriter writer) {
+
     }
 }

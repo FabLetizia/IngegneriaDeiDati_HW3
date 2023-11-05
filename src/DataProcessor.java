@@ -1,9 +1,10 @@
 import org.apache.lucene.document.Document;
+import org.apache.lucene.index.IndexWriter;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 public interface DataProcessor {
     Document processHTMLTable(String htmlTable);
-    Document processJSONData(File jsonFile) throws IOException;
+    void processJSONData(Path jsonFile, IndexWriter writer) throws IOException;
 }

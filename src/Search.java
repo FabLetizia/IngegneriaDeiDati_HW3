@@ -1,7 +1,7 @@
 public class Search {
 
     public static void main(String[] args) {
-        DataProcessor dataProcessor = new JSONDataProcessor();
+        JSONDataProcessor dataProcessor = new JSONDataProcessor();
         Indexer indexer = new Indexer(dataProcessor);
         /*
         try {

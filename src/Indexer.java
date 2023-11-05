@@ -1,12 +1,11 @@
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.codecs.simpletext.SimpleTextCodec;
-import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,10 +19,8 @@ public class Indexer {
 
     public Indexer(DataProcessor dataProcessor) {
         this.dataProcessor = dataProcessor;
-        this.indexPath = "/Users/alessandropesare/software/GitHub/IngegneriaDeiDati_HW3/target";
-        //this.indexPath = "/target";
-        this.docsPath = "/Users/alessandropesare/software/GitHub/IngegneriaDeiDati_HW3/src/tabellejson";
-        //this.docsPath = "src/resources";
+        this.indexPath = "/Users/alessandropesare/software/GitHub/IngegneriaDeiDati_HW3/target/index";
+        this.docsPath = "/Users/alessandropesare/Documents";
         initialize();
     }
 
@@ -38,7 +35,6 @@ public class Indexer {
         try {
             this.directory = FSDirectory.open(Paths.get(this.getIndexPath()));
             IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer());
-            config.setCodec(new SimpleTextCodec());
             IndexWriter writer = new IndexWriter(directory, config);
             System.out.println("Inizio lettura dati e costruzione indice");
             long startTime = System.currentTimeMillis();
@@ -65,48 +61,16 @@ public class Indexer {
         return this.directory;
     }
 
-
     public void indexDocuments(IndexWriter writer, Path dir) throws IOException {
         if (Files.isDirectory(dir)) {
             File[] files = dir.toFile().listFiles((pathname) -> pathname.getName().endsWith(".json"));
             if (files != null) {
                 for (File file : files) {
                     System.out.println(file.getName());
-                    System.out.println(file);
-                    Document luceneDoc = dataProcessor.processJSONData(file);
-                    writer.addDocument(luceneDoc);
-                    System.out.println(luceneDoc.toString());
+                    dataProcessor.processJSONData(file.toPath(),writer);
+                    writer.close();
                 }
-                writer.commit();
             }
-        }
-    }
-    /*private Analyzer createAnalyzer() {
-        CharArraySet contenutoStopWords = new CharArraySet(Arrays.asList("in", "dei", "di", "il", "la", "lo", "gli", "dell'"), true);
-        Analyzer titoloAnalyzer = new WhitespaceAnalyzer();
-        Analyzer contenutoAnalyzer = new StandardAnalyzer(contenutoStopWords);
-        Analyzer defaultAnalyzer = new ItalianAnalyzer();
-
-        Map<String, Analyzer> perFieldAnalyzers = new HashMap<>();
-        perFieldAnalyzers.put("titolo", titoloAnalyzer);
-        perFieldAnalyzers.put("contenuto", contenutoAnalyzer);
-
-        return new PerFieldAnalyzerWrapper(defaultAnalyzer, perFieldAnalyzers);
-    }*/
-
-    private String readTextFile(File file) throws IOException {
-        /* Leggiamo il contenuto del file .txt e lo restituiamo come una stringa, utilizzo File Reader
-         ottimizziamo con un bufferReader la lettura del file minimizzando le operazioni di IO con una
-         lettura bufferizzata*/
-
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"))) {
-            StringBuilder text = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                text.append(line).append("\n");
-            }
-            System.out.println(text.toString());
-            return text.toString();
         }
     }
 }

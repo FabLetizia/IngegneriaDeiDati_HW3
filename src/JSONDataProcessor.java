@@ -1,14 +1,16 @@
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.TextField;
+import org.apache.lucene.index.IndexWriter;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,44 +24,77 @@ public class JSONDataProcessor implements DataProcessor {
     }
 
     @Override
-    public Document processJSONData(File jsonFile) throws IOException {
-        Gson gson = new Gson();
-        Document luceneDoc = new Document();
+    public void processJSONData(Path jsonFilePath, IndexWriter writer) throws IOException {
+        FileReader fileReader = new FileReader(jsonFilePath.toString());
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-        // Leggi il contenuto del file JSON
-        String jsonData = Files.readString(jsonFile.toPath()); // Utilizza la classe Files per semplificare la lettura del file
+        List<Document> documents = new ArrayList<>();
+        String line = null;
+        String currentId = null;
+        Map<String, Map<Integer, List<String>>> idToColumnData = new HashMap<>();
 
-        // Analizza il contenuto JSON in un oggetto JSON
-        JsonObject jsonObject = gson.fromJson(jsonData, JsonObject.class);
+        while (true) {
+            line = bufferedReader.readLine();
+            if (line == null) {
+                break;
+            }
 
-        // Estrai l'array "cells" dall'oggetto JSON
-        JsonArray cellsArray = jsonObject.getAsJsonArray("cells");
+            // Analizza il contenuto JSON in un oggetto JSON
+            JsonParser parser = new JsonParser();
+            JsonObject jsonObject = parser.parse(line).getAsJsonObject();
 
-        Map<Integer, List<String>> columnData = new HashMap<>();
+            // Estrai l'ID dall'oggetto JSON
+            String id = jsonObject.get("id").getAsString();
 
-        // Itera sugli oggetti JSON nell'array "cells" e cerca i campi "cleanedText","Coordinates" e "isHeader"
-        for (JsonElement cellElement : cellsArray) {
-            JsonObject cellObject = cellElement.getAsJsonObject();
-            if (cellObject.has("cleanedText") && !cellObject.get("type").getAsString().equals("EMPTY")) {
-                String cleanedText = cellObject.get("cleanedText").getAsString();
-                int column = cellObject.getAsJsonObject("Coordinates").get("column").getAsInt();
-                boolean isHeader = cellObject.get("isHeader").getAsBoolean();
+            if (!id.equals(currentId) && currentId != null) {
+                Document luceneDoc = new Document();
+                Map<Integer, List<String>> columnData = idToColumnData.get(currentId);
+                for (Map.Entry<Integer, List<String>> entry : columnData.entrySet()) {
+                    int column = entry.getKey();
+                    List<String> columnValues = entry.getValue();
+                    String fieldName = "column_" + column;
+                    String fieldValue = String.join(" ", columnValues);
+                    luceneDoc.add(new TextField(fieldName, fieldValue, Field.Store.YES));
+                }
+                idToColumnData.remove(currentId);
+                writer.addDocument(luceneDoc);
+                writer.commit();
+                //documents.add(luceneDoc);
+            }
 
-                if (!isHeader) {
+            // Crea una mappa per le colonne se è un nuovo ID
+            if (!idToColumnData.containsKey(id)) {
+                idToColumnData.put(id, new HashMap<>());
+
+            }
+
+            // Estrai i dati che desideri indicizzare (es. cleanedText) e aggrega per colonna
+            JsonArray cellsArray = jsonObject.getAsJsonArray("cells");
+            for (JsonElement cellElement : cellsArray) {
+                JsonObject cellObject = cellElement.getAsJsonObject();
+                if (cellObject.has("cleanedText") && !cellObject.get("type").getAsString().equals("EMPTY")) {
+                    String cleanedText = cellObject.get("cleanedText").getAsString();
+                    int column = cellObject.getAsJsonObject("Coordinates").get("column").getAsInt();
+
+                    Map<Integer, List<String>> columnData = idToColumnData.get(id);
                     columnData.computeIfAbsent(column, k -> new ArrayList<>()).add(cleanedText);
                 }
             }
+            currentId = id;
         }
-
-        // Creazione dei campi nel documento Lucene
+        Document luceneDoc = new Document();
+        Map<Integer, List<String>> columnData = idToColumnData.get(currentId);
         for (Map.Entry<Integer, List<String>> entry : columnData.entrySet()) {
+            int column = entry.getKey();
             List<String> columnValues = entry.getValue();
-            String fieldName = "column_" + entry.getKey();
-            //combina i valori in una singola stringa
+            String fieldName = "column_" + column;
             String fieldValue = String.join(" ", columnValues);
             luceneDoc.add(new TextField(fieldName, fieldValue, Field.Store.YES));
         }
-
-        return luceneDoc;
+        idToColumnData.remove(currentId);
+        writer.addDocument(luceneDoc);
+        writer.commit();
+        bufferedReader.close();
+        fileReader.close();
     }
 }
