@@ -58,7 +58,6 @@ public class JSONDataProcessor implements DataProcessor {
                 }
                 idToColumnData.remove(currentId);
                 writer.addDocument(luceneDoc);
-                writer.commit();
                 //documents.add(luceneDoc);
             }
 
