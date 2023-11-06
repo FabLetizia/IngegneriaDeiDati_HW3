@@ -1,50 +1,115 @@
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexableField;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.*;
+import org.apache.lucene.store.Directory;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Search {
 
-    public static void main(String[] args) {
+    private Query colonna_input;
+    private Map<Integer, List<Object>> column2score;
+
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public Query getColonna_input() {
+        return colonna_input;
+    }
+
+    public Map<Integer, List<Object>> getColumn2score() {
+        return column2score;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Search(Query colonna_input, Map<Integer, List<Object>> column2score) {
+        this.colonna_input = colonna_input;
+        this.column2score = column2score;
+        this.id = 0;
+    }
+
+
+    public static void main(String[] args) throws IOException {
         JSONDataProcessor dataProcessor = new JSONDataProcessor();
         Indexer indexer = new Indexer(dataProcessor);
-        /*
-        try {
-            IndexReader reader = DirectoryReader.open(indexer.getDirectory());
-            IndexSearcher searcher = new IndexSearcher(reader);
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            while (true) {
-                System.out.print("Inserisci una query(insieme di colonne) cioè una serie di parole chiave separate da spazi, oppure 'exit' per uscire: ");
-                String userInput = br.readLine();
-                if (userInput.equalsIgnoreCase("exit")) {
-                    break;
-                }
+        Directory directory = indexer.getDirectory();
+        IndexReader reader = DirectoryReader.open(directory);
+        IndexSearcher searcher = new IndexSearcher(reader);
+        Analyzer analyzer = new StandardAnalyzer();
+        String contenutoColonna = "Bridge"; // Sostituisci con il valore fornito dall'utente
+        String[] terms = contenutoColonna.split(" ");
+        BooleanQuery.Builder booleanQueryBuilder = new BooleanQuery.Builder();
+        for(String term : terms){
+            Query termQuery = new TermQuery(new Term(term));
+            booleanQueryBuilder.add(termQuery, BooleanClause.Occur.SHOULD);
+        }
+        BooleanQuery query = booleanQueryBuilder.build();
 
-                // Split della stringa dell'utente in parole chiave
-                String[] keywords = userInput.split(" ");
+        Search search = new Search(query,new HashMap<>());
 
-                // Creazione di una query booleana per cercare tutte le parole chiave nei campi desiderati
-                BooleanQuery.Builder booleanQueryBuilder = new BooleanQuery.Builder();
-                for (String keyword : keywords) {
-                    Query termQueryTitolo = new TermQuery(new Term("titolo", keyword));
-                    Query termQueryContenuto = new TermQuery(new Term("contenuto", keyword));
-                    booleanQueryBuilder.add(termQueryTitolo, BooleanClause.Occur.SHOULD); // "SHOULD" indica l'OR logico
-                    booleanQueryBuilder.add(termQueryContenuto, BooleanClause.Occur.SHOULD);
-                }
-                Query userQuery = booleanQueryBuilder.build();
+        TopDocs allDocs = searcher.search(query,Integer.MAX_VALUE);
+        for(ScoreDoc scoreDoc: allDocs.scoreDocs){
+            int docId = scoreDoc.doc;
+            Document document = reader.document(docId);
 
-                System.out.println("Esecuzione di query: " + userQuery.toString());
-
-                // Esegui la query
-                TopDocs hits = searcher.search(userQuery, 3);
-                if (hits.scoreDocs.length == 0) {
-                    System.out.println("Nessun documento trovato");
-                }
-                for (int j = 0; j < hits.scoreDocs.length; j++) {
-                    ScoreDoc scoreDoc = hits.scoreDocs[j];
-                    Document doc = searcher.doc(scoreDoc.doc);
-                    System.out.println("doc" + scoreDoc.doc + ":" + doc.get("titolo") + " (" + scoreDoc.score + ")");
+            for(IndexableField field : document.getFields()){
+                String fieldValue = field.stringValue();
+                mergeList(search.getColumn2score(),search.getColonna_input(),fieldValue,search.getId());
+                search.setId(search.getId()+1);
+            }
+        }
+        //dopo aver popolato e ordinato la mappa column2score restituiamo le top k colonne
+        int max_score = 0;
+        int j = 0;
+        List<String> results = new ArrayList<>();
+        int id_max_score = 0;
+        // k=3 è il numero di colonne di interesse
+        while(j<=3){
+            for(int i = 0; i<= search.getColumn2score().size(); i++){
+                int scoreAttuale = (int) search.getColumn2score().get(i).get(0);
+                if(scoreAttuale>max_score){
+                    max_score = scoreAttuale;
+                    id_max_score = i;
                 }
             }
-            // Chiudi il reader
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+            results.add((String) search.getColumn2score().get(id_max_score).get(1));
+            j++;
+        }
+
+
     }
+
+    private static void mergeList(Map<Integer, List<Object>> column2score, Query query, String colonna, int id) {
+        String[] terminiQuery = query.toString().split(" ");
+        int punteggio = 0;
+
+        for (String termine : terminiQuery) {
+            if (colonna.contains(termine)) {
+                punteggio++;
+            }
+        }
+        if(punteggio>0) {
+            List<Object> scoreAndColumn = new ArrayList<>();
+            scoreAndColumn.add(punteggio);
+            scoreAndColumn.add(colonna);
+            column2score.put(id, scoreAndColumn);
+        }
+    }
+
+
 }
