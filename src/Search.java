@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -18,6 +19,7 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
 
 public class Search {
 	
@@ -102,12 +104,18 @@ public class Search {
 	
 
 	public static void main(String[] args) throws IOException {
-		JSONDataProcessor dataProcessor = new JSONDataProcessor();
-		Indexer indexer = new Indexer(dataProcessor);
-		directory = indexer.getDirectory();
+		System.out.println("ciao");
+		directory = FSDirectory.open(Paths.get("target/index"));
+		System.out.println("ciao");
+//		JSONDataProcessor dataProcessor = new JSONDataProcessor();
+//		Indexer indexer = new Indexer(dataProcessor);
+//		directory = indexer.getDirectory();
 		reader = DirectoryReader.open(directory);
+		System.out.println("ciao");
 		searcher = new IndexSearcher(reader);
+		System.out.println("ciao");
 		String contenutoColonna = "Bridge"; // Sostituisci con il valore fornito dall'utente
+		System.out.println("ciao");
 		Search searchColumn = new Search();
 		List<String> resultsSearch = searchColumn.searchDocument(contenutoColonna, 5);
 		List<String> resultsMerge = searchColumn.mergeList(contenutoColonna, 5);
