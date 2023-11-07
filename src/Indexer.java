@@ -1,14 +1,21 @@
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.codecs.simpletext.SimpleTextCodec;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
+
 
 public class Indexer {
     private String indexPath;
@@ -34,7 +41,15 @@ public class Indexer {
     private void initialize() {
         try {
             this.directory = FSDirectory.open(Paths.get(this.getIndexPath()));
-            IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer());
+            
+            Map<String,Analyzer> perFieldAnalyzers = new HashMap<>();
+            perFieldAnalyzers.put("table", new StandardAnalyzer());
+            perFieldAnalyzers.put("column_table", new StandardAnalyzer());
+            perFieldAnalyzers.put("content", new StandardAnalyzer());
+    		Analyzer analyzer = new PerFieldAnalyzerWrapper(new EnglishAnalyzer(),perFieldAnalyzers);
+            IndexWriterConfig config = new IndexWriterConfig(analyzer);
+    		config.setCodec(new SimpleTextCodec());
+
             IndexWriter writer = new IndexWriter(directory, config);
             System.out.println("Inizio lettura dati e costruzione indice");
             long startTime = System.currentTimeMillis();
