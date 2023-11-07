@@ -1,58 +1,33 @@
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexableField;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.*;
-import org.apache.lucene.store.Directory;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.apache.lucene.document.Document;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.store.Directory;
 
 public class Search {
-
-	private Query colonna_input;
-	private Map<Integer, List<Object>> column2score;
-
-	private int id;
-
-	public int getId() {
-		return id;
-	}
-
-	public Query getColonna_input() {
-		return colonna_input;
-	}
-
-	public Map<Integer, List<Object>> getColumn2score() {
-		return column2score;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Search(Query colonna_input, Map<Integer, List<Object>> column2score) {
-		this.colonna_input = colonna_input;
-		this.column2score = column2score;
-		this.id = 0;
-	}
-
-
-	public static void main(String[] args) throws IOException {
-		JSONDataProcessor dataProcessor = new JSONDataProcessor();
-		Indexer indexer = new Indexer(dataProcessor);
-		Directory directory = indexer.getDirectory();
-		IndexReader reader = DirectoryReader.open(directory);
-		IndexSearcher searcher = new IndexSearcher(reader);
-		Analyzer analyzer = new StandardAnalyzer();
-		String contenutoColonna = "Bridge"; // Sostituisci con il valore fornito dall'utente
-		String[] terms = contenutoColonna.split(" ");
+	
+	private static Directory directory;
+	private static IndexReader reader;
+	private static IndexSearcher searcher;
+	
+	
+	private List<String> searchDocument(String colonna, int k) throws IOException{
+		String[] terms = colonna.split(" ");
 		BooleanQuery.Builder booleanQueryBuilder = new BooleanQuery.Builder();
 		for(String term : terms){
 			Query termQuery = new TermQuery(new Term("column_content",term));
@@ -60,60 +35,84 @@ public class Search {
 		}
 		BooleanQuery query = booleanQueryBuilder.build();
 
-		Search search = new Search(query,new HashMap<>());
-		List<Document> results = new ArrayList<>();
-
-		int k = 5;
+		List<String> results = new ArrayList<>();
+		
 		TopDocs allDocs = searcher.search(query,k);
 		for(ScoreDoc scoreDoc: allDocs.scoreDocs){
 			int docId = scoreDoc.doc;
 			Document document = reader.document(docId);
-			results.add(document);
-			System.out.println(document);
-
+			results.add(document.toString());
+			System.out.println(document);		
 		}
-		//            for(IndexableField field : document.getFields()){
-		//                String fieldValue = field.stringValue();
-		//                mergeList(search.getColumn2score(),search.getColonna_input(),fieldValue,search.getId());
-		//                search.setId(search.getId()+1);
-		//            }
+		return results;
+		
+	}
+	
 
-		//        //dopo aver popolato e ordinato la mappa column2score restituiamo le top k colonne
-		//        int max_score = 0;
-		//        int j = 0;
-		//        List<String> results = new ArrayList<>();
-		//        int id_max_score = 0;
-		//        // k=3 è il numero di colonne di interesse
-		//        while(j<=3){
-		//            for(int i = 0; i<= search.getColumn2score().size(); i++){
-		//                int scoreAttuale = (int) search.getColumn2score().get(i).get(0);
-		//                if(scoreAttuale>max_score){
-		//                    max_score = scoreAttuale;
-		//                    id_max_score = i;
-		//                }
-		//            }
-		//            results.add((String) search.getColumn2score().get(id_max_score).get(1));
-		//            j++;
-		//        }
+	private List<String> mergeList(String colonna, int k) throws IOException {
+		BooleanQuery.Builder booleanQueryBuilder = new BooleanQuery.Builder();
+		String[] terms = colonna.split(" ");
+		for(String term : terms){
+			Query termQuery = new TermQuery(new Term("column_content",term));
 
+			booleanQueryBuilder.add(termQuery, BooleanClause.Occur.SHOULD);
+			BooleanQuery query = booleanQueryBuilder.build();
+
+			Map<BooleanQuery, List<Document>> query2documents = new HashMap<>();
+			List<Document> documents = new ArrayList<>();
+			TopDocs allDocs = searcher.search(query,Integer.MAX_VALUE);
+			for(ScoreDoc scoreDoc: allDocs.scoreDocs){
+				int docId = scoreDoc.doc;
+				Document document = reader.document(docId);
+				System.out.println(document);
+				documents.add(document);
+						
+			}
+			query2documents.put(query, documents);
+		}
+		
+		Map<Document, Integer> document2score = new HashMap<>();
+		for(Document doc : document2score.keySet()) {
+			document2score.compute(doc, (key, value) -> (value == null) ? 1 : value + 1);
+		}
+		
+		// Converti la mappa in un elenco di voci e ordina per valore
+        List<Map.Entry<Document, Integer>> sortedEntries = document2score.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .collect(Collectors.toList());
+
+        // Crea una mappa ordinata basata sul valore
+        Map<Document, Integer> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<Document, Integer> entry : sortedEntries) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        // Ora hai una mappa (sortedMap) ordinata in base al valore
+		List<String> results = new ArrayList<>();
+        for(Document doc : sortedMap.keySet()) {
+        	results.add(doc.toString());
+        	k -= 1;
+        	if(k == 0)
+        		break;
+        }
+		
+		return results;
 
 	}
+	
 
-	private static void mergeList(Map<Integer, List<Object>> column2score, Query query, String colonna, int id) {
-		String[] terminiQuery = query.toString().split(" ");
-		int punteggio = 0;
-
-		for (String termine : terminiQuery) {
-			if (colonna.contains(termine)) {
-				punteggio++;
-			}
-		}
-		if(punteggio>0) {
-			List<Object> scoreAndColumn = new ArrayList<>();
-			scoreAndColumn.add(punteggio);
-			scoreAndColumn.add(colonna);
-			column2score.put(id, scoreAndColumn);
-		}
+	public static void main(String[] args) throws IOException {
+		JSONDataProcessor dataProcessor = new JSONDataProcessor();
+		Indexer indexer = new Indexer(dataProcessor);
+		directory = indexer.getDirectory();
+		reader = DirectoryReader.open(directory);
+		searcher = new IndexSearcher(reader);
+		String contenutoColonna = "Bridge"; // Sostituisci con il valore fornito dall'utente
+		Search searchColumn = new Search();
+		List<String> resultsSearch = searchColumn.searchDocument(contenutoColonna, 5);
+		List<String> resultsMerge = searchColumn.mergeList(contenutoColonna, 5);
+		System.out.println(resultsSearch.size());
+		System.out.println(resultsMerge.size());
 	}
 
 
