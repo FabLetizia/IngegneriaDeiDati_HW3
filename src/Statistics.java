@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.google.gson.JsonArray;
@@ -87,13 +85,6 @@ public class Statistics {
                 if(cellObject.get("type").getAsString().equals("EMPTY")) {
                 	this.nullNumber++;
             	}
-                
-//                if (cellObject.has("cleanedText") && !cellObject.get("type").getAsString().equals("EMPTY")) {
-//                    String cleanedText = cellObject.get("cleanedText").getAsString();
-//                    int column = cellObject.getAsJsonObject("Coordinates").get("column").getAsInt();
-//
-//                   
-//                }
             }
             currentId = id;
         }
@@ -128,19 +119,19 @@ public class Statistics {
             
             line = "Numero di tabelle: " + tableNumber + System.lineSeparator();
             fileWriter.write(line);
-            line = "Numero medio valori NULL per tabella: " + nullNumber/tableNumber + System.lineSeparator();
+            line = "Numero medio valori NULL per tabella: " + (float) nullNumber/tableNumber + System.lineSeparator();
             fileWriter.write(line);
             // Ottieni l'insieme dei valori dalla mappa
             for (Integer value: column2Count.values()) {
                 sumColumn += value;
             }
-            line = "Numero medio di colonne: " + sumColumn/tableNumber + System.lineSeparator();
+            line = "Numero medio di colonne: " + (float) sumColumn/tableNumber + System.lineSeparator();
             fileWriter.write(line);
             
             for (Integer value: row2Count.values()) {
                 sumRow += value;
             }
-            line = "Numero medio di righe: " + sumRow/tableNumber + System.lineSeparator();
+            line = "Numero medio di righe: " + (float) sumRow/tableNumber + System.lineSeparator();
             fileWriter.write(line);
             System.out.println("Dati scritti nel file di testo con successo.");
         } catch (IOException e) {

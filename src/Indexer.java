@@ -26,8 +26,8 @@ public class Indexer {
 
     public Indexer(DataProcessor dataProcessor) {
         this.dataProcessor = dataProcessor;
-        this.indexPath = "/Users/alessandropesare/software/GitHub/IngegneriaDeiDati_HW3/target/index";
-        this.docsPath = "/Users/alessandropesare/Documents";
+        this.indexPath = "target/index";
+        this.docsPath = "C:\\Users\\antod\\OneDrive\\Desktop\\statisticheDataset";
         initialize();
     }
 
