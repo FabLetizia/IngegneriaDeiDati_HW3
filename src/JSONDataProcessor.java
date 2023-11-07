@@ -67,7 +67,7 @@ public class JSONDataProcessor implements DataProcessor {
 			if(!column2cell.isEmpty()) {
 	            JsonParser parser = new JsonParser();
 	            JsonObject jsonObject = parser.parse(table).getAsJsonObject();
-				String table_id = jsonObject.get("id").getAsString();
+				String table_id = jsonObject.get("$oid").getAsString();
 				// questo ciclo viene eseguito per ogni tabella
 				for(Integer col : column2cell.keySet()) {
 					// creo un documento per ogni colonna
