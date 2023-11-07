@@ -43,9 +43,9 @@ public class Indexer {
             this.directory = FSDirectory.open(Paths.get(this.getIndexPath()));
             
             Map<String,Analyzer> perFieldAnalyzers = new HashMap<>();
-            perFieldAnalyzers.put("table", new StandardAnalyzer());
+            perFieldAnalyzers.put("table_id", new StandardAnalyzer());
             perFieldAnalyzers.put("column_table", new StandardAnalyzer());
-            perFieldAnalyzers.put("content", new StandardAnalyzer());
+            perFieldAnalyzers.put("column_content", new StandardAnalyzer());
     		Analyzer analyzer = new PerFieldAnalyzerWrapper(new EnglishAnalyzer(),perFieldAnalyzers);
             IndexWriterConfig config = new IndexWriterConfig(analyzer);
     		config.setCodec(new SimpleTextCodec());
@@ -54,7 +54,6 @@ public class Indexer {
             System.out.println("Inizio lettura dati e costruzione indice");
             long startTime = System.currentTimeMillis();
             indexDocuments(writer, Paths.get(this.getDocsPath()));
-            writer.close();
             long endTime = System.currentTimeMillis();
             long time = endTime - startTime;
             System.out.println("Indicizzazione completata con successo. L'indice è stato salvato in " + this.getIndexPath());

@@ -1,99 +1,90 @@
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class JSONDataProcessor implements DataProcessor {
-    @Override
-    public Document processHTMLTable(String htmlTable) {
-        // Implementa la logica per l'elaborazione di tabelle HTML se necessario.
-        return null;
-    }
+	
+	private FileReader fileReader;
+	private BufferedReader bufferedReader;
+	
+	@Override
+	public Document processHTMLTable(String htmlTable) {
+		// Implementa la logica per l'elaborazione di tabelle HTML se necessario.
+		return null;
+	}
 
-    @Override
-    public void processJSONData(Path jsonFilePath, IndexWriter writer) throws IOException {
-        FileReader fileReader = new FileReader(jsonFilePath.toString());
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
+	@Override
+	public void processJSONData(Path jsonFilePath, IndexWriter writer) throws IOException {
+        this.fileReader = new FileReader(jsonFilePath.toString());
+        this.bufferedReader = new BufferedReader(fileReader);
+		String table = null;		
+		while(true) {
+			// in line ho la tabella
+			table = bufferedReader.readLine();
+			//se la line è vuota la tabella è finita e bisogna passare alla successiva
+			if (table == null) break;
 
-        List<Document> documents = new ArrayList<>();
-        String line = null;
-        String currentId = null;
-        Map<String, Map<Integer, List<String>>> idToColumnData = new HashMap<>();
+			JsonElement jsonTree = JsonParser.parseString(table);
+			JsonObject jsonTable = jsonTree.getAsJsonObject();
 
-        while (true) {
-            line = bufferedReader.readLine();
-            if (line == null) {
-                break;
-            }
+			//mappa dove memorizzo le celle per colonna
+			Map<Integer, String> column2cell = new HashMap<>();
 
-            // Analizza il contenuto JSON in un oggetto JSON
-            JsonParser parser = new JsonParser();
-            JsonObject jsonObject = parser.parse(line).getAsJsonObject();
+			JsonArray cells = jsonTable.getAsJsonArray("cells");
+			for (JsonElement cell : cells) {
 
-            // Estrai l'ID dall'oggetto JSON
-            String id = jsonObject.get("id").getAsString();
+				JsonObject jsonobject = cell.getAsJsonObject();
+				//se non è un header è contenuto di interesse
+				if (!jsonobject.get("isHeader").getAsBoolean()){
+					JsonObject coordinates = jsonobject.get("Coordinates").getAsJsonObject();
+					Integer column = coordinates.get("column").getAsInt();
+					String content = jsonobject.get("cleanedText").getAsString();
+					if (!content.equals("")) {
+						if(column2cell.containsKey(column)) {
+							//lo spazio separa le varie celle nel documento
+							column2cell.put(column, column2cell.get(column) + " " + content);
+						}
+						else {
+							column2cell.put(column, content);
+						}
+					}
+				}
+			}
 
-            if (!id.equals(currentId) && currentId != null) {
-                Document luceneDoc = new Document();
-                Map<Integer, List<String>> columnData = idToColumnData.get(currentId);
-                for (Map.Entry<Integer, List<String>> entry : columnData.entrySet()) {
-                    int column = entry.getKey();
-                    List<String> columnValues = entry.getValue();
-                    String fieldName = "column_" + column;
-                    String fieldValue = String.join(" ", columnValues);
-                    luceneDoc.add(new TextField(fieldName, fieldValue, Field.Store.YES));
-                }
-                idToColumnData.remove(currentId);
-                writer.addDocument(luceneDoc);
-                //documents.add(luceneDoc);
-            }
+			if(!column2cell.isEmpty()) {
+	            JsonParser parser = new JsonParser();
+	            JsonObject jsonObject = parser.parse(table).getAsJsonObject();
+				String table_id = jsonObject.get("id").getAsString();
+				// questo ciclo viene eseguito per ogni tabella
+				for(Integer col : column2cell.keySet()) {
+					// creo un documento per ogni colonna
+					Document doc = new Document();
+					doc.add(new TextField("table_id", table_id, Field.Store.YES));
+					doc.add(new TextField("column_table", table_id+"_column"+col.toString(), Field.Store.YES));
+					doc.add(new TextField("column_content",column2cell.get(col), Field.Store.YES));
+					writer.addDocument(doc);
 
-            // Crea una mappa per le colonne se è un nuovo ID
-            if (!idToColumnData.containsKey(id)) {
-                idToColumnData.put(id, new HashMap<>());
+				}
+			}
 
-            }
+		}
+		writer.commit();
 
-            // Estrai i dati che desideri indicizzare (es. cleanedText) e aggrega per colonna
-            JsonArray cellsArray = jsonObject.getAsJsonArray("cells");
-            for (JsonElement cellElement : cellsArray) {
-                JsonObject cellObject = cellElement.getAsJsonObject();
-                if (cellObject.has("cleanedText") && !cellObject.get("type").getAsString().equals("EMPTY")) {
-                    String cleanedText = cellObject.get("cleanedText").getAsString();
-                    int column = cellObject.getAsJsonObject("Coordinates").get("column").getAsInt();
+		this.bufferedReader.close();
+		this.fileReader.close();
+	}
 
-                    Map<Integer, List<String>> columnData = idToColumnData.get(id);
-                    columnData.computeIfAbsent(column, k -> new ArrayList<>()).add(cleanedText);
-                }
-            }
-            currentId = id;
-        }
-        Document luceneDoc = new Document();
-        Map<Integer, List<String>> columnData = idToColumnData.get(currentId);
-        for (Map.Entry<Integer, List<String>> entry : columnData.entrySet()) {
-            int column = entry.getKey();
-            List<String> columnValues = entry.getValue();
-            String fieldName = "column_" + column;
-            String fieldValue = String.join(" ", columnValues);
-            luceneDoc.add(new TextField(fieldName, fieldValue, Field.Store.YES));
-        }
-        idToColumnData.remove(currentId);
-        writer.addDocument(luceneDoc);
-        writer.commit();
-        bufferedReader.close();
-        fileReader.close();
-    }
 }
