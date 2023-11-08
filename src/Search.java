@@ -50,6 +50,7 @@ public class Search {
 		BooleanQuery.Builder booleanQueryBuilder = new BooleanQuery.Builder();
 		String[] terms = colonna.split(" ");
 		Map<String, List<Document>> query2documents = new HashMap<>();
+		System.out.println("Algoritmo mergeList: ");
 		for(String term : terms){
 			Query termQuery = new TermQuery(new Term("column_content",term));
 
@@ -57,7 +58,6 @@ public class Search {
 			BooleanQuery query = booleanQueryBuilder.build();
 			List<Document> documents = new ArrayList<>();
 			TopDocs allDocs = searcher.search(query,Integer.MAX_VALUE);
-			System.out.println("Algoritmo mergeList: ");
 			for(ScoreDoc scoreDoc: allDocs.scoreDocs){
 				int docId = scoreDoc.doc;
 				Document document = reader.document(docId);
@@ -126,15 +126,19 @@ public class Search {
 		searcher = new IndexSearcher(reader);
 		String contenutoColonna = "dual"; // Sostituisci con il valore fornito dall'utente
 		System.out.println("Inizio ricerca dei termini inseriti");
-        long startTime = System.currentTimeMillis();
+        long startTime1 = System.currentTimeMillis();
 		Search searchColumn = new Search();
 		List<String> resultsSearch = searchColumn.searchDocument(contenutoColonna, 5);
-		List<String> resultsMerge = searchColumn.mergeList(contenutoColonna, 5);
 		System.out.println(resultsSearch.size());
+		long endTime1 = System.currentTimeMillis();
+        long time1 = endTime1 - startTime1;
+        System.out.println("Il tempo trascorso per la ricerca searchDocument è: " + time1 + " millisecondi");
+        long startTime2 = System.currentTimeMillis();
+        List<String> resultsMerge = searchColumn.mergeList(contenutoColonna, 5);
 		System.out.println(resultsMerge.size());
-		long endTime = System.currentTimeMillis();
-        long time = endTime - startTime;
-        System.out.println("Il tempo trascorso per la ricerca è: " + time + " millisecondi");
+		long endTime2 = System.currentTimeMillis();
+        long time2 = endTime2 - startTime2;
+        System.out.println("Il tempo trascorso per la ricerca mergeList è: " + time2 + " millisecondi");
 	}
 	
 }
