@@ -31,6 +31,7 @@ public class Search {
 		List<String> results = new ArrayList<>();
 		
 		TopDocs allDocs = searcher.search(query,k);
+		System.out.println("Algoritmo searchDocument: ");
 		for(ScoreDoc scoreDoc: allDocs.scoreDocs){
 			int docId = scoreDoc.doc;
 			Document document = reader.document(docId);
@@ -56,6 +57,7 @@ public class Search {
 			BooleanQuery query = booleanQueryBuilder.build();
 			List<Document> documents = new ArrayList<>();
 			TopDocs allDocs = searcher.search(query,Integer.MAX_VALUE);
+			System.out.println("Algoritmo mergeList: ");
 			for(ScoreDoc scoreDoc: allDocs.scoreDocs){
 				int docId = scoreDoc.doc;
 				Document document = reader.document(docId);
