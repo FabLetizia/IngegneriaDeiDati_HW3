@@ -35,7 +35,10 @@ public class Search {
 			int docId = scoreDoc.doc;
 			Document document = reader.document(docId);
 			results.add(document.toString());
-			System.out.println(document);		
+			System.out.println(document.getField("column_table"));
+			System.out.println("\n");		
+
+
 		}
 		return results;
 		
@@ -56,10 +59,10 @@ public class Search {
 			for(ScoreDoc scoreDoc: allDocs.scoreDocs){
 				int docId = scoreDoc.doc;
 				Document document = reader.document(docId);
-				System.out.println(document);
 				documents.add(document);
 						
 			}
+			
 			query2documents.put(term, documents);
 		}
 		//preoccupati di inizializzare i valori a 0
@@ -94,12 +97,17 @@ public class Search {
 
         // Ora hai una mappa (sortedMap) ordinata in base al valore
 		List<String> results = new ArrayList<>();
+		List<Document> documentResult = new ArrayList<>();
         for(Document doc : sortedMap.keySet()) {
         	results.add(doc.toString());
+        	documentResult.add(doc);
+        	System.out.println(doc.getField("column_table"));
+			System.out.println("\n");
         	k -= 1;
         	if(k == 0)
         		break;
         }
+        Statistics.searchStatistics(document2score, documentResult, colonna, k);
 		
 		return results;
 
@@ -108,10 +116,10 @@ public class Search {
 
 	public static void main(String[] args) throws IOException {
 		System.out.println("*****START*****");
-//		JSONDataProcessor dataProcessor = new JSONDataProcessor();
-//		Indexer indexer = new Indexer(dataProcessor);
-//		directory = indexer.getDirectory();
-		directory = FSDirectory.open(Paths.get("target/index"));
+		JSONDataProcessor dataProcessor = new JSONDataProcessor();
+		Indexer indexer = new Indexer(dataProcessor);
+		directory = indexer.getDirectory();
+	//  directory = FSDirectory.open(Paths.get("target/index"));
 		reader = DirectoryReader.open(directory);
 		searcher = new IndexSearcher(reader);
 		String contenutoColonna = "dual"; // Sostituisci con il valore fornito dall'utente

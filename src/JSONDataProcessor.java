@@ -30,7 +30,8 @@ public class JSONDataProcessor implements DataProcessor {
 	public void processJSONData(Path jsonFilePath, IndexWriter writer) throws IOException {
         this.fileReader = new FileReader(jsonFilePath.toString());
         this.bufferedReader = new BufferedReader(fileReader);
-		String table = null;		
+		String table = null;
+		int table_number = 0;
 		while(true) {
 			// in line ho la tabella
 			table = bufferedReader.readLine();
@@ -73,10 +74,10 @@ public class JSONDataProcessor implements DataProcessor {
 					// creo un documento per ogni colonna
 					Document doc = new Document();
 					doc.add(new TextField("table_id", table_id, Field.Store.YES));
-					doc.add(new TextField("column_table", table_id+"_column"+col.toString(), Field.Store.YES));
+					doc.add(new TextField("column_table", "doc_"+table_number+"_column"+col.toString(), Field.Store.YES));
 					doc.add(new TextField("column_content",column2cell.get(col), Field.Store.YES));
 					writer.addDocument(doc);
-
+                    table_number += 1;
 				}
 			}
 
