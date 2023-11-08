@@ -4,8 +4,11 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -105,17 +108,23 @@ public class Search {
 
 	public static void main(String[] args) throws IOException {
 		System.out.println("*****START*****");
-		JSONDataProcessor dataProcessor = new JSONDataProcessor();
-		Indexer indexer = new Indexer(dataProcessor);
-		directory = indexer.getDirectory();
+//		JSONDataProcessor dataProcessor = new JSONDataProcessor();
+//		Indexer indexer = new Indexer(dataProcessor);
+//		directory = indexer.getDirectory();
+		directory = FSDirectory.open(Paths.get("target/index"));
 		reader = DirectoryReader.open(directory);
 		searcher = new IndexSearcher(reader);
 		String contenutoColonna = "dual"; // Sostituisci con il valore fornito dall'utente
+		System.out.println("Inizio ricerca dei termini inseriti");
+        long startTime = System.currentTimeMillis();
 		Search searchColumn = new Search();
 		List<String> resultsSearch = searchColumn.searchDocument(contenutoColonna, 5);
 		List<String> resultsMerge = searchColumn.mergeList(contenutoColonna, 5);
 		System.out.println(resultsSearch.size());
 		System.out.println(resultsMerge.size());
+		long endTime = System.currentTimeMillis();
+        long time = endTime - startTime;
+        System.out.println("Il tempo trascorso per la ricerca è: " + time + " millisecondi");
 	}
 	
 }
