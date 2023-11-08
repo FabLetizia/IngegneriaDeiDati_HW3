@@ -50,64 +50,78 @@ public class Search {
 	private List<String> mergeList(String colonna, int k) throws IOException {
 		BooleanQuery.Builder booleanQueryBuilder = new BooleanQuery.Builder();
 		String[] terms = colonna.split(" ");
-		Map<String, List<Document>> query2documents = new HashMap<>();
+		Map<String, List<String>> query2documents = new HashMap<>();
 		System.out.println("Algoritmo mergeList: ");
 		for(String term : terms){
 			Query termQuery = new TermQuery(new Term("column_content",term));
 
 			booleanQueryBuilder.add(termQuery, BooleanClause.Occur.SHOULD);
 			BooleanQuery query = booleanQueryBuilder.build();
-			List<Document> documents = new ArrayList<>();
+			List<String> documents = new ArrayList<>();
 			TopDocs allDocs = searcher.search(query,Integer.MAX_VALUE);
 			for(ScoreDoc scoreDoc: allDocs.scoreDocs){
 				int docId = scoreDoc.doc;
 				Document document = reader.document(docId);
-				documents.add(document);
+				documents.add(document.get("column_table").toString());
 						
 			}
 			
 			query2documents.put(term, documents);
 		}
 		//preoccupati di inizializzare i valori a 0
-		Map<Document, Integer> document2score = new HashMap<>();
-
-		for (List<Document> documentList : query2documents.values()) {
-			for (Document doc : documentList) {
-				// Inizializzare il conteggio per ogni documento a zero
-				document2score.put(doc, 0);
-			}
-		}
-
+		Map<String, Integer> document2score = new HashMap<>();
+		
 		for(String term : query2documents.keySet()) {
-			List<Document> documents = query2documents.get(term);
-			for (Document doc : documents) {
-				int currentCount = document2score.get(doc);
-				document2score.put(doc, currentCount + 1);
+			for(String document: query2documents.get(term)) {
+				if(document2score.containsKey(document)) {
+					int cont = document2score.get(document);
+					document2score.put(document, cont+1);
+				}
+				else {
+					document2score.put(document, 1);
+				}
+				
 			}
 		}
 		
+
+//		for (List<Document> documentList : query2documents.values()) {
+//			for (Document doc : documentList) {
+//				// Inizializzare il conteggio per ogni documento a zero
+//				document2score.put(doc, 0);
+//			}
+//		}
+//
+//		for(String term : query2documents.keySet()) {
+//			List<Document> documents = query2documents.get(term);
+//			for (Document doc : documents) {
+//				int currentCount = document2score.get(doc);
+//				document2score.put(doc, currentCount + 1);
+//			}
+//		}
+		
 		// Converti la mappa in un elenco di voci e ordina per valore
-		List<Map.Entry<Document, Integer>> sortedEntries = document2score.entrySet().stream()
-				.sorted(Map.Entry.<Document, Integer>comparingByValue().reversed())
+		List<Map.Entry<String, Integer>> sortedEntries = document2score.entrySet().stream()
+				.sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
 				.collect(Collectors.toList());
 
 
 		// Crea una mappa ordinata basata sul valore
-        Map<Document, Integer> sortedMap = new LinkedHashMap<>();
-        for (Map.Entry<Document, Integer> entry : sortedEntries) {
+        Map<String, Integer> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> entry : sortedEntries) {
             sortedMap.put(entry.getKey(), entry.getValue());
         }
 
         // Ora hai una mappa (sortedMap) ordinata in base al valore
 		List<String> results = new ArrayList<>();
-		List<Document> documentResult = new ArrayList<>();
-        for(Document doc : sortedMap.keySet()) {
+		List<String> documentResult = new ArrayList<>();
+        for(String doc : sortedMap.keySet()) {
         	results.add(doc.toString());
         	documentResult.add(doc);
-        	System.out.println("id tabella: "+doc.getField("table_id"));
-        	System.out.println("da dove: "+doc.getField("column_table"));
+        	System.out.println("id tabella: "+doc);
+        	//System.out.println("da dove: "+doc.getField("column_table"));
         	System.out.println("punteggio: "+sortedMap.get(doc));
-        	System.out.println("contenuto: "+doc.getField("column_content"));
+        	//System.out.println("contenuto: "+doc.getField("column_content"));
 			System.out.println("\n");
         	k -= 1;
         	if(k == 0)
@@ -127,8 +141,8 @@ public class Search {
 		//directory = indexer.getDirectory();
 	    directory = FSDirectory.open(Paths.get("target/index"));
 		reader = DirectoryReader.open(directory);
-		searcher = new IndexSearcher(reader);
-		String contenutoColonna = "dual Complex Toronto"; // Sostituisci con il valore fornito dall'utente
+		searcher = new IndexSearcher(reader); //amas palestinian
+		String contenutoColonna = "mount lemmon"; // Sostituisci con il valore fornito dall'utente
 		System.out.println("Inizio ricerca dei termini inseriti");
         long startTime1 = System.currentTimeMillis();
 		Search searchColumn = new Search();

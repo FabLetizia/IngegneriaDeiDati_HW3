@@ -176,7 +176,7 @@ public class Statistics {
         System.out.println("Fine esecuzione");
 	}
 	
-	public static void searchStatistics(Map<Document, Integer> document2Score, List<Document> result, 
+	public static void searchStatistics(Map<String, Integer> document2Score, List<String> result, 
 			String terms, int k) {
 		String filePath = "target/test.txt";
 
@@ -184,14 +184,14 @@ public class Statistics {
             String line = "Tutti i documenti ritornati dati i seguenti termini: " + terms + "." + System.lineSeparator();
             fileWriter.write(line);
             
-        	for (Map.Entry<Document, Integer> entry : document2Score.entrySet()) {
-                line = entry.getKey().getField("column_table") + ": " + entry.getValue() + System.lineSeparator();
+        	for (Map.Entry<String, Integer> entry : document2Score.entrySet()) {
+                line = entry.getKey()+ ": " + entry.getValue() + System.lineSeparator();
                 fileWriter.write(line);
             }
         	line = "Le migliori k colonne ritornate sono invece le seguenti: " + System.lineSeparator();
             fileWriter.write(line);
-            for(Document doc: result) {
-            	line = doc.getField("column_table") + ": " + document2Score.get(doc);
+            for(String doc: result) {
+            	line = doc+ ": " + document2Score.get(doc);
                 fileWriter.write(line);
             }
             
