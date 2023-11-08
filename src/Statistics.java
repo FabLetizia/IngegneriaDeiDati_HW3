@@ -8,8 +8,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.lucene.document.Document;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -171,5 +174,31 @@ public class Statistics {
             e.printStackTrace();
         }
         System.out.println("Fine esecuzione");
+	}
+	
+	public static void searchStatistics(Map<Document, Integer> document2Score, List<Document> result, 
+			String terms, int k) {
+		String filePath = "C:\\Users\\antod\\OneDrive\\Desktop\\statisticheDataset\\test.txt";
+
+        try (FileWriter fileWriter = new FileWriter(filePath)) {
+            String line = "Tutti i documenti ritornati dati i seguenti termini: " + terms + "." + System.lineSeparator();
+            fileWriter.write(line);
+            
+        	for (Map.Entry<Document, Integer> entry : document2Score.entrySet()) {
+                line = entry.getKey().getField("column_table") + ": " + entry.getValue() + System.lineSeparator();
+                fileWriter.write(line);
+            }
+        	line = "Le migliori k colonne ritornate sono invece le seguenti: " + System.lineSeparator();
+            fileWriter.write(line);
+            for(Document doc: result) {
+            	line = doc.getField("column_table") + ": " + document2Score.get(doc);
+                fileWriter.write(line);
+            }
+            
+            System.out.println("Dati scritti nel file di testo con successo.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Statistiche generate");
 	}
 }
