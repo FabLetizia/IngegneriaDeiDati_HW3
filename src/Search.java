@@ -36,6 +36,7 @@ public class Search {
 			int docId = scoreDoc.doc;
 			Document document = reader.document(docId);
 			results.add(document.toString());
+        	System.out.println(document.getField("table_id"));
 			System.out.println(document.getField("column_table"));
 			System.out.println("\n");		
 
@@ -103,7 +104,9 @@ public class Search {
         for(Document doc : sortedMap.keySet()) {
         	results.add(doc.toString());
         	documentResult.add(doc);
-        	System.out.println(doc.getField("column_table"));
+        	System.out.println("id tabella: "+doc.getField("table_id"));
+        	System.out.println("da dove: "+doc.getField("column_table"));
+        	System.out.println("punteggio: "+sortedMap.get(doc));
 			System.out.println("\n");
         	k -= 1;
         	if(k == 0)
@@ -118,13 +121,13 @@ public class Search {
 
 	public static void main(String[] args) throws IOException {
 		System.out.println("*****START*****");
-		JSONDataProcessor dataProcessor = new JSONDataProcessor();
-		Indexer indexer = new Indexer(dataProcessor);
-		directory = indexer.getDirectory();
-	//  directory = FSDirectory.open(Paths.get("target/index"));
+		//JSONDataProcessor dataProcessor = new JSONDataProcessor();
+		//Indexer indexer = new Indexer(dataProcessor);
+		//directory = indexer.getDirectory();
+	    directory = FSDirectory.open(Paths.get("target/index"));
 		reader = DirectoryReader.open(directory);
 		searcher = new IndexSearcher(reader);
-		String contenutoColonna = "dual"; // Sostituisci con il valore fornito dall'utente
+		String contenutoColonna = "dual Complex Toronto"; // Sostituisci con il valore fornito dall'utente
 		System.out.println("Inizio ricerca dei termini inseriti");
         long startTime1 = System.currentTimeMillis();
 		Search searchColumn = new Search();
