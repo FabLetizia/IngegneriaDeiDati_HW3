@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.lucene.document.Document;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -191,7 +189,7 @@ public class Statistics {
         	line = "Le migliori k colonne ritornate sono invece le seguenti: " + System.lineSeparator();
             fileWriter.write(line);
             for(String doc: result) {
-            	line = doc+ ": " + document2Score.get(doc);
+            	line = doc+ ": " + document2Score.get(doc) + System.lineSeparator();
                 fileWriter.write(line);
             }
             
