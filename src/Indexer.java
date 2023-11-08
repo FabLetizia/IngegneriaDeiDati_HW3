@@ -1,11 +1,3 @@
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
@@ -15,6 +7,14 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Indexer {
@@ -27,7 +27,7 @@ public class Indexer {
     public Indexer(DataProcessor dataProcessor) {
         this.dataProcessor = dataProcessor;
         this.indexPath = "target/index";
-        this.docsPath = "C:\\Users\\antod\\OneDrive\\Desktop\\statisticheDataset";
+        this.docsPath = "/Users/alessandropesare/software/GitHub/IngegneriaDeiDati_HW3/src/tabellejson";
         initialize();
     }
 
@@ -41,18 +41,19 @@ public class Indexer {
     private void initialize() {
         try {
             this.directory = FSDirectory.open(Paths.get(this.getIndexPath()));
-            
+            System.out.println(this.directory);
             Map<String,Analyzer> perFieldAnalyzers = new HashMap<>();
             perFieldAnalyzers.put("table_id", new StandardAnalyzer());
             perFieldAnalyzers.put("column_table", new StandardAnalyzer());
-            perFieldAnalyzers.put("column_content", new StandardAnalyzer());
-    		Analyzer analyzer = new PerFieldAnalyzerWrapper(new EnglishAnalyzer(),perFieldAnalyzers);
+            perFieldAnalyzers.put("column_content", new EnglishAnalyzer());
+    		Analyzer analyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(),perFieldAnalyzers);
             IndexWriterConfig config = new IndexWriterConfig(analyzer);
     		config.setCodec(new SimpleTextCodec());
 
             IndexWriter writer = new IndexWriter(directory, config);
             System.out.println("Inizio lettura dati e costruzione indice");
             long startTime = System.currentTimeMillis();
+            System.out.println(this.docsPath);
             indexDocuments(writer, Paths.get(this.getDocsPath()));
             long endTime = System.currentTimeMillis();
             long time = endTime - startTime;
@@ -82,8 +83,8 @@ public class Indexer {
                 for (File file : files) {
                     System.out.println(file.getName());
                     dataProcessor.processJSONData(file.toPath(),writer);
-                    writer.close();
                 }
+                writer.close();
             }
         }
     }

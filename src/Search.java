@@ -1,25 +1,13 @@
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
+
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Search {
 	
@@ -54,13 +42,12 @@ public class Search {
 	private List<String> mergeList(String colonna, int k) throws IOException {
 		BooleanQuery.Builder booleanQueryBuilder = new BooleanQuery.Builder();
 		String[] terms = colonna.split(" ");
+		Map<String, List<Document>> query2documents = new HashMap<>();
 		for(String term : terms){
 			Query termQuery = new TermQuery(new Term("column_content",term));
 
 			booleanQueryBuilder.add(termQuery, BooleanClause.Occur.SHOULD);
 			BooleanQuery query = booleanQueryBuilder.build();
-
-			Map<BooleanQuery, List<Document>> query2documents = new HashMap<>();
 			List<Document> documents = new ArrayList<>();
 			TopDocs allDocs = searcher.search(query,Integer.MAX_VALUE);
 			for(ScoreDoc scoreDoc: allDocs.scoreDocs){
@@ -70,20 +57,33 @@ public class Search {
 				documents.add(document);
 						
 			}
-			query2documents.put(query, documents);
+			query2documents.put(term, documents);
 		}
-		
+		//preoccupati di inizializzare i valori a 0
 		Map<Document, Integer> document2score = new HashMap<>();
-		for(Document doc : document2score.keySet()) {
-			document2score.compute(doc, (key, value) -> (value == null) ? 1 : value + 1);
+
+		for (List<Document> documentList : query2documents.values()) {
+			for (Document doc : documentList) {
+				// Inizializzare il conteggio per ogni documento a zero
+				document2score.put(doc, 0);
+			}
+		}
+
+		for(String term : query2documents.keySet()) {
+			List<Document> documents = query2documents.get(term);
+			for (Document doc : documents) {
+				int currentCount = document2score.get(doc);
+				document2score.put(doc, currentCount + 1);
+			}
 		}
 		
 		// Converti la mappa in un elenco di voci e ordina per valore
-        List<Map.Entry<Document, Integer>> sortedEntries = document2score.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue())
-                .collect(Collectors.toList());
+		List<Map.Entry<Document, Integer>> sortedEntries = document2score.entrySet().stream()
+				.sorted(Map.Entry.<Document, Integer>comparingByValue().reversed())
+				.collect(Collectors.toList());
 
-        // Crea una mappa ordinata basata sul valore
+
+		// Crea una mappa ordinata basata sul valore
         Map<Document, Integer> sortedMap = new LinkedHashMap<>();
         for (Map.Entry<Document, Integer> entry : sortedEntries) {
             sortedMap.put(entry.getKey(), entry.getValue());
@@ -104,24 +104,18 @@ public class Search {
 	
 
 	public static void main(String[] args) throws IOException {
-		System.out.println("ciao");
-		directory = FSDirectory.open(Paths.get("target/index"));
-		System.out.println("ciao");
-//		JSONDataProcessor dataProcessor = new JSONDataProcessor();
-//		Indexer indexer = new Indexer(dataProcessor);
-//		directory = indexer.getDirectory();
+		System.out.println("*****START*****");
+		JSONDataProcessor dataProcessor = new JSONDataProcessor();
+		Indexer indexer = new Indexer(dataProcessor);
+		directory = indexer.getDirectory();
 		reader = DirectoryReader.open(directory);
-		System.out.println("ciao");
 		searcher = new IndexSearcher(reader);
-		System.out.println("ciao");
-		String contenutoColonna = "Bridge"; // Sostituisci con il valore fornito dall'utente
-		System.out.println("ciao");
+		String contenutoColonna = "dual"; // Sostituisci con il valore fornito dall'utente
 		Search searchColumn = new Search();
 		List<String> resultsSearch = searchColumn.searchDocument(contenutoColonna, 5);
 		List<String> resultsMerge = searchColumn.mergeList(contenutoColonna, 5);
 		System.out.println(resultsSearch.size());
 		System.out.println(resultsMerge.size());
 	}
-
-
+	
 }
