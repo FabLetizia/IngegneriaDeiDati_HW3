@@ -74,11 +74,12 @@ public class JSONDataProcessor implements DataProcessor {
 					// creo un documento per ogni colonna
 					Document doc = new Document();
 					doc.add(new TextField("table_id", table_id, Field.Store.YES));
-					doc.add(new TextField("column_table", "doc_"+table_number+"_column"+col.toString(), Field.Store.YES));
+					doc.add(new TextField("column_table", "tab"+table_number+"_column"+col.toString(), Field.Store.YES));
 					doc.add(new TextField("column_content",column2cell.get(col), Field.Store.YES));
 					writer.addDocument(doc);
-                    table_number += 1;
+                    
 				}
+				table_number += 1;
 			}
 
 		}
