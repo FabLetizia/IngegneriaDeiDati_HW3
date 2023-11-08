@@ -105,6 +105,7 @@ public class Search {
 
 	public static void main(String[] args) throws IOException {
 		System.out.println("*****START*****");
+		//
 		JSONDataProcessor dataProcessor = new JSONDataProcessor();
 		Indexer indexer = new Indexer(dataProcessor);
 		directory = indexer.getDirectory();
