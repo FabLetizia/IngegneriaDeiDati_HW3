@@ -107,6 +107,7 @@ public class Search {
         	System.out.println("id tabella: "+doc.getField("table_id"));
         	System.out.println("da dove: "+doc.getField("column_table"));
         	System.out.println("punteggio: "+sortedMap.get(doc));
+        	System.out.println("contenuto: "+doc.getField("column_content"));
 			System.out.println("\n");
         	k -= 1;
         	if(k == 0)
