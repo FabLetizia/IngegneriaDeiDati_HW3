@@ -178,7 +178,7 @@ public class Statistics {
 	
 	public static void searchStatistics(Map<Document, Integer> document2Score, List<Document> result, 
 			String terms, int k) {
-		String filePath = "C:\\Users\\antod\\OneDrive\\Desktop\\statisticheDataset\\test.txt";
+		String filePath = "target/test.txt";
 
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             String line = "Tutti i documenti ritornati dati i seguenti termini: " + terms + "." + System.lineSeparator();
