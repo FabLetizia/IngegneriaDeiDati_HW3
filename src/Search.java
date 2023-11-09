@@ -150,8 +150,9 @@ public class Search {
 		//directory = indexer.getDirectory();
 	    directory = FSDirectory.open(Paths.get("target/index"));
 		reader = DirectoryReader.open(directory);
-		searcher = new IndexSearcher(reader); //amas palestinian
+		searcher = new IndexSearcher(reader);
 		String contenutoColonna = "mount lemmon"; // Sostituisci con il valore fornito dall'utente
+		contenutoColonna.toLowerCase();
 		System.out.println("Inizio ricerca dei termini inseriti");
         long startTime1 = System.currentTimeMillis();
 		Search searchColumn = new Search();
