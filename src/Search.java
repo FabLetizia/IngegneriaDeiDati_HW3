@@ -135,12 +135,10 @@ public class Search {
 	    directory = FSDirectory.open(Paths.get("target/index"));
 		reader = DirectoryReader.open(directory);
 		searcher = new IndexSearcher(reader);
-<<<<<<< Updated upstream
+
 		String contenutoColonna = "Lemmon".toLowerCase(); // Sostituisci con il valore fornito dall'utente
-=======
-		String contenutoColonna = "karen roma wilson bob ann anthony"; // Sostituisci con il valore fornito dall'utente
+
 		contenutoColonna.toLowerCase();
->>>>>>> Stashed changes
 		System.out.println("Inizio ricerca dei termini inseriti");
 //      long startTime1 = System.currentTimeMillis();
 		Search searchColumn = new Search();
