@@ -93,22 +93,6 @@ public class Search {
 			}
 		}
 		
-
-//		for (List<Document> documentList : query2documents.values()) {
-//			for (Document doc : documentList) {
-//				// Inizializzare il conteggio per ogni documento a zero
-//				document2score.put(doc, 0);
-//			}
-//		}
-//
-//		for(String term : query2documents.keySet()) {
-//			List<Document> documents = query2documents.get(term);
-//			for (Document doc : documents) {
-//				int currentCount = document2score.get(doc);
-//				document2score.put(doc, currentCount + 1);
-//			}
-//		}
-		
 		// Converti la mappa in un elenco di voci e ordina per valore
 		List<Map.Entry<String, Integer>> sortedEntries = document2score.entrySet().stream()
 				.sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
@@ -151,8 +135,7 @@ public class Search {
 	    directory = FSDirectory.open(Paths.get("target/index"));
 		reader = DirectoryReader.open(directory);
 		searcher = new IndexSearcher(reader);
-		String contenutoColonna = "mount lemmon"; // Sostituisci con il valore fornito dall'utente
-		contenutoColonna.toLowerCase();
+		String contenutoColonna = "Lemmon".toLowerCase(); // Sostituisci con il valore fornito dall'utente
 		System.out.println("Inizio ricerca dei termini inseriti");
         long startTime1 = System.currentTimeMillis();
 		Search searchColumn = new Search();
