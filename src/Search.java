@@ -64,13 +64,13 @@ public class Search {
 		for(String term : terms){
 			Query termQuery = new TermQuery(new Term("column_content",term));
 
-			booleanQueryBuilder.add(termQuery, BooleanClause.Occur.SHOULD);
-			BooleanQuery query = booleanQueryBuilder.build();
+//			booleanQueryBuilder.add(termQuery, BooleanClause.Occur.SHOULD);
+//			BooleanQuery query = booleanQueryBuilder.build();
 			List<String> documents = new ArrayList<>();
-			TopDocs allDocs = searcher.search(query,Integer.MAX_VALUE);
+			TopDocs allDocs = searcher.search(termQuery,Integer.MAX_VALUE);
 			for(ScoreDoc scoreDoc: allDocs.scoreDocs){
 				int docId = scoreDoc.doc;
-				Document document = reader.document(docId);
+				Document document = searcher.doc(docId);
 				documents.add(document.get("column_table").toString());
 						
 			}
@@ -135,15 +135,20 @@ public class Search {
 	    directory = FSDirectory.open(Paths.get("target/index"));
 		reader = DirectoryReader.open(directory);
 		searcher = new IndexSearcher(reader);
+<<<<<<< Updated upstream
 		String contenutoColonna = "Lemmon".toLowerCase(); // Sostituisci con il valore fornito dall'utente
+=======
+		String contenutoColonna = "karen roma wilson bob ann anthony"; // Sostituisci con il valore fornito dall'utente
+		contenutoColonna.toLowerCase();
+>>>>>>> Stashed changes
 		System.out.println("Inizio ricerca dei termini inseriti");
-        long startTime1 = System.currentTimeMillis();
+//      long startTime1 = System.currentTimeMillis();
 		Search searchColumn = new Search();
-		List<String> resultsSearch = searchColumn.searchDocument(contenutoColonna, 5);
-		System.out.println(resultsSearch.size());
-		long endTime1 = System.currentTimeMillis();
-        long time1 = endTime1 - startTime1;
-        System.out.println("Il tempo trascorso per la ricerca searchDocument è: " + time1 + " millisecondi");
+//		List<String> resultsSearch = searchColumn.searchDocument(contenutoColonna, 5);
+//		System.out.println(resultsSearch.size());
+//		long endTime1 = System.currentTimeMillis();
+//      long time1 = endTime1 - startTime1;
+//      System.out.println("Il tempo trascorso per la ricerca searchDocument è: " + time1 + " millisecondi");
         long startTime2 = System.currentTimeMillis();
         List<String> resultsMerge = searchColumn.mergeList(contenutoColonna, 5);
 		System.out.println(resultsMerge.size());
